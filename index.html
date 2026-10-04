@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SkillQuest AI · Level Up Your Skills. Get Remote-Ready.</title>
+<style>
+:root{--bg:#0b0d12;--card:#141824;--line:#232a3b;--text:#e8ecf4;--mute:#8d97ad;--acc:#7c5cff;--acc2:#22d3a6;--warn:#ff6b6b;--xp:#fbbf24;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+section{padding:52px 0}
+h2{font-size:1.7rem;margin-bottom:8px}
+.sub{color:var(--mute);margin-bottom:26px}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
+.hero{text-align:center;padding:64px 0 44px;background:radial-gradient(ellipse at top,#1b1540 0%,var(--bg) 65%)}
+.avatar{width:84px;height:84px;margin:0 auto 16px;border-radius:24px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:2.6rem;box-shadow:0 0 40px rgba(124,92,255,.45)}
+.badge{display:inline-block;padding:7px 16px;border:1px solid var(--xp);border-radius:999px;font-size:.85rem;color:var(--xp);background:rgba(251,191,36,.08);cursor:pointer}
+.badge:hover{background:rgba(251,191,36,.16)}
+.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);margin:16px 0 8px;letter-spacing:-.02em}
+.hero h1 span{background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.desc{max-width:660px;margin:0 auto 22px;color:var(--mute)}
+.stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 16px;font-size:.8rem;color:var(--mute)}
+.stat b{display:block;font-size:1.1rem;color:var(--text)}
+.lvl{max-width:340px;margin:0 auto 24px;text-align:left;font-size:.8rem;color:var(--mute)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .8s ease}
+.btn{display:inline-block;padding:13px 26px;border-radius:12px;font-weight:700;text-decoration:none;border:2px solid var(--acc);color:#fff;background:var(--acc);cursor:pointer;font-size:1rem;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,92,255,.45)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--acc2);box-shadow:none}
+.btn.sm{padding:9px 16px;font-size:.88rem}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.box.chaos{border-top:3px solid var(--warn)}.box.sol{border-top:3px solid var(--acc2)}
+.box h3{margin-bottom:10px}
+.box li{list-style:none;padding:6px 0 6px 28px;position:relative;color:var(--mute);font-size:.93rem}
+.box li::before{position:absolute;left:0;top:6px}
+.chaos li::before{content:"❌"}.sol li::before{content:"✅"}
+.flow{margin-top:10px;font-size:.82rem;color:var(--xp);font-weight:600}
+.cap h3{font-size:1.05rem;margin-bottom:6px}.cap p{color:var(--mute);font-size:.9rem}
+/* TREE */
+.tree{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.node{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;color:var(--text);cursor:pointer;text-align:center;font-size:.82rem;transition:.2s}
+.node:hover{border-color:var(--acc)}
+.node.sel{border-color:var(--acc2);box-shadow:0 0 0 2px rgba(34,211,166,.25)}
+.node .ic{font-size:1.5rem;display:block}
+.node .gap{display:block;font-size:.68rem;color:var(--warn);min-height:1em}
+.pips{display:flex;gap:3px;justify-content:center;margin-top:6px}
+.pips i{width:12px;height:5px;border-radius:3px;background:var(--line)}
+.pips i.on{background:var(--acc2)}
+.detail{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center}
+.detail h3{font-size:1.2rem;margin-bottom:6px}.detail p{color:var(--mute);font-size:.92rem;margin-bottom:8px}
+.q{background:#10131d;border:1px dashed var(--acc);border-radius:12px;padding:14px;font-size:.9rem}
+.q b{color:var(--xp)}.q .btn{margin-top:10px;width:100%}
+.insight{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;justify-content:center}
+.chip{font-size:.8rem;padding:6px 14px;border-radius:99px;background:#1d2336;border:1px solid var(--line)}
+/* CHAT */
+.chat{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;max-width:760px;margin:0 auto}
+.chat-head{padding:12px 18px;border-bottom:1px solid var(--line);font-size:.85rem;color:var(--mute);display:flex;justify-content:space-between}
+.chat-body{height:360px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:88%;padding:12px 16px;border-radius:14px;font-size:.92rem;white-space:pre-line;animation:in .3s ease}
+.msg.user{align-self:flex-end;background:var(--acc);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{align-self:flex-start;background:#1d2336;border-bottom-left-radius:4px}
+.msg b{color:var(--xp)}
+.msg .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.msg .acts button{padding:6px 12px;border-radius:8px;border:1px solid var(--acc2);background:none;color:var(--acc2);cursor:pointer;font-size:.82rem}
+.msg .acts button:disabled{opacity:.4;cursor:default}
+.typing{display:flex;gap:5px;padding:14px 16px}
+.typing i{width:8px;height:8px;border-radius:50%;background:var(--mute);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.scen{display:flex;flex-wrap:wrap;gap:8px;padding:12px 18px 0;border-top:1px solid var(--line)}
+.scen button{padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:#10131d;color:var(--text);cursor:pointer;font-size:.8rem}
+.scen button:hover{border-color:var(--acc2);color:var(--acc2)}
+.inp{display:flex;gap:8px;padding:12px 18px 16px}
+.inp input{flex:1;min-width:0;padding:11px 14px;border-radius:10px;border:1px solid var(--line);background:#10131d;color:var(--text);font-size:.92rem;font-family:inherit}
+.inp input:focus{outline:2px solid var(--acc2);border-color:transparent}
+footer{text-align:center;padding:56px 0 40px;background:radial-gradient(ellipse at bottom,#1b1540 0%,var(--bg) 65%);border-top:1px solid var(--line)}
+.cta-row{margin:22px 0 28px}
+.btn.big{padding:15px 34px;font-size:1.05rem;background:linear-gradient(90deg,var(--acc),#5b8cff)}
+.credit{color:var(--mute);font-size:.85rem}
+.credit a,.credit button{color:var(--acc2);background:none;border:0;cursor:pointer;font-size:inherit;text-decoration:underline}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--acc2);color:#04130e;font-weight:700;padding:10px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:.3s;z-index:9}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.grid2,.grid3,.detail{grid-template-columns:1fr}.tree{grid-template-columns:repeat(2,1fr)}section{padding:38px 0}.chat-body{height:320px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <div class="avatar">🎮</div>
+  <div class="badge" id="badge" role="button" tabindex="0"></div>
+  <h1>SkillQuest <span>AI</span></h1>
+  <p style="font-size:1.2rem;margin-bottom:10px"><b>Level Up Your Skills. Get Remote-Ready.</b></p>
+  <p class="desc">AI learning &amp; career assistant yang memetakan konsep Data Engineering ke teknologi nyata, menemukan skill gap, memberi practical quests, dan melatih technical English untuk karier remote internasional.</p>
+  <div class="stats">
+    <div class="stat">Level<b id="sLvl"></b></div>
+    <div class="stat">Streak<b id="sStreak"></b></div>
+    <div class="stat">Quest selesai<b id="sDone"></b></div>
+  </div>
+  <div class="lvl"><span id="lvlName"></span><span id="xpTxt" style="float:right"></span><div class="bar"><i id="xpBar" style="width:0"></i></div></div>
+  <div class="row"><a class="btn" href="#tree">🌳 Lihat Skill Tree</a><a class="btn ghost" href="#chat">💬 Ngobrol dengan AI</a></div>
+</div></header>
+
+<section><div class="wrap">
+  <h2>Dari bingung belajar jadi structured progression</h2>
+  <p class="sub">Belajar Data Engineering tidak harus acak. Ubah jadi game yang terukur.</p>
+  <div class="grid2">
+    <div class="box chaos"><h3>😵 The Chaos</h3><ul>
+      <li>Ecosystem Data Engineering sangat luas, bingung mulai dari mana.</li>
+      <li>Belajar tools terpisah tanpa paham konsep dan cara kerjanya di real-world pipelines.</li>
+      <li>Remote Data Engineer butuh English, komunikasi, interview, dan kolaborasi, tapi sulit diukur.</li></ul></div>
+    <div class="box sol"><h3>🚀 The Solution</h3><ul>
+      <li>Skill Tree jelas: Data Engineering, Remote Work, Career Readiness.</li>
+      <li>Konsep dulu, lalu dihubungkan ke dbt, Airflow, Kafka, dan BigQuery.</li>
+      <li>Skill gap terdeteksi otomatis, AI memberi quest dengan XP terukur.</li></ul>
+      <p class="flow">Skill Tree → Level → Skill Gap → Quest → XP → Progress</p></div>
+  </div>
+  <div class="grid3" style="margin-top:20px">
+    <div class="box cap"><h3>📚 Google Drive</h3><p>Menyimpan learning materials, notes, dan dokumentasi.</p></div>
+    <div class="box cap"><h3>📅 Google Calendar</h3><p>Menjadwalkan quest dan study session otomatis.</p></div>
+    <div class="box cap"><h3>🛡️ Human-in-the-Loop</h3><p>AI meminta approval Anda sebelum mengubah jadwal.</p></div>
+  </div>
+</div></section>
+
+<section id="tree" style="background:#0e1119"><div class="wrap">
+  <h2>My Skill Tree</h2>
+  <p class="sub">Klik skill untuk melihat detail, lalu selesaikan quest untuk naik level. Progress tersimpan di browser ini.</p>
+  <div class="tree" id="nodes"></div>
+  <div class="detail" id="detail"></div>
+  <div class="insight" id="insight"></div>
+  <div class="row" style="margin-top:18px">
+    <button class="btn sm" id="copyBtn">📋 Salin ringkasan skill tree</button>
+    <button class="btn sm ghost" id="linkBtn">🔗 Salin link halaman ini</button>
+  </div>
+</div></section>
+
+<section id="chat-sec"><div class="wrap">
+  <h2>Coba SkillQuest AI sekarang</h2>
+  <p class="sub">Pilih skenario atau ketik sendiri: "bingung mulai", "latihan english", "jadwalkan", "progress".</p>
+  <div class="chat" id="chat">
+    <div class="chat-head"><span>🎮 SkillQuest AI</span><span id="chatMode">💬 Mode: Tanya jawab</span></div>
+    <div class="chat-body" id="log"></div>
+    <div class="scen">
+      <button data-q="Saya bingung mulai belajar apa">🧭 Bingung mulai</button>
+      <button data-q="Latihan explain pipeline dalam english">🗣️ Latihan English</button>
+      <button data-q="Jadwalkan quest saya minggu ini">📅 Jadwalkan quest</button>
+      <button data-q="Cek progress saya">📊 Progress</button>
+    </div>
+    <div class="inp"><input id="ti" placeholder="Ketik pesan…" aria-label="Pesan"><button class="btn sm" id="send">Kirim</button></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <h2>Siap naik level? 🚀</h2>
+  <p class="sub">Mulai perjalanan Anda menjadi Remote Data Engineer hari ini.</p>
+  <div class="row cta-row">
+    <a class="btn big" href="#chat-sec">⚔️ Start Your Quest</a>
+    <a class="btn ghost" href="#tree">🌳 Check My Skill Tree</a>
+  </div>
+  <p class="credit">Built with AI · AI Builder Bootcamp Showcase · <a id="li" target="_blank" rel="noopener">Hubungi saya di LinkedIn</a> · <button id="reset">Reset progress</button></p>
+</div></footer>
+<div id="toast"></div>
+
+<script>
+// Ganti dengan link LinkedIn / portfolio Anda
+const CTA_URL="https://www.linkedin.com/";
+document.getElementById("li").href=CTA_URL;
+const $=id=>document.getElementById(id);
+const S=[
+{id:"found",n:"Foundation",i:"🧱",tools:"Python, SQL, Git, Linux, Docker",d:"Fondasi wajib sebelum membangun pipeline.",q:"Dockerize a Python script"},
+{id:"ing",n:"Ingestion",i:"📥",tools:"REST API, Airbyte, Kafka Connect",d:"Mengambil data dari sumber ke platform data.",q:"Ingest a public API every hour"},
+{id:"trf",n:"Transformation",i:"🔄",tools:"SQL, dbt, Spark",d:"ETL vs ELT dan incremental processing.",q:"Build an Incremental dbt Model"},
+{id:"orc",n:"Orchestration",i:"🎼",tools:"Airflow",d:"Menjadwalkan dan memantau pipeline.",q:"Schedule a DAG with retries"},
+{id:"wh",n:"Warehousing",i:"🏛️",tools:"BigQuery",d:"Modeling data untuk analytics.",q:"Design a star schema in BigQuery"},
+{id:"str",n:"Streaming",i:"🌊",tools:"Kafka",d:"Memproses event secara real-time.",q:"Stream events into a Kafka topic"},
+{id:"dq",n:"Data Quality",i:"✅",tools:"dbt tests, Great Expectations",d:"Memastikan data bisa dipercaya.",q:"Add 5 tests to a dbt model"},
+{id:"cld",n:"Cloud",i:"☁️",tools:"GCP, AWS",d:"Menjalankan pipeline di cloud.",q:"Deploy a pipeline on GCP free tier"},
+{id:"rem",n:"Remote Communication",i:"🗣️",tools:"Technical English, async writing",d:"Menjelaskan pekerjaan teknis dengan jelas.",q:"Explain Your Data Pipeline in English"},
+{id:"car",n:"Career Readiness",i:"💼",tools:"Interview, portfolio, STAR",d:"Siap melamar posisi remote internasional.",q:"Prepare 3 STAR interview stories"}];
+const TITLES=["Data Rookie","Pipeline Builder","Pipeline Engineer","Senior Builder","Remote-Ready DE"];
+const today=()=>new Date().toISOString().slice(0,10);
+let st=null;
+try{st=JSON.parse(localStorage.getItem("sq1"))}catch(e){}
+if(!st||!st.lv)st={xp:1240,lv:{found:3,ing:2,trf:2,orc:1,wh:2,str:1,dq:1,cld:1,rem:2,car:1},done:0,streak:0,last:""};
+try{if(st.last!==today()){const g=st.last?(new Date(today())-new Date(st.last))/864e5:0;st.streak=g===1?st.streak+1:1;st.last=today()}}catch(e){}
+const save=()=>{try{localStorage.setItem("sq1",JSON.stringify(st))}catch(e){}};
+let sel=null;
+const lvlOf=()=>1+Math.floor(st.xp/1000);
+const gaps=()=>S.map((s,k)=>({s,k})).sort((a,b)=>st.lv[a.s.id]-st.lv[b.s.id]||a.k-b.k).map(x=>x.s);
+const byId=id=>S.find(s=>s.id===id);
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2200)}
+function addXP(n){st.xp+=n;save();render()}
+function render(){
+  const L=lvlOf(),g=gaps();
+  if(!sel)sel=g[0].id;
+  $("sLvl").textContent=L;$("sStreak").textContent="🔥 "+st.streak+" hari";$("sDone").textContent=st.done;
+  $("lvlName").textContent="Remote Data Engineer · "+TITLES[Math.min(L-1,4)];
+  $("xpTxt").textContent=st.xp.toLocaleString("id-ID")+" / "+(L*1000).toLocaleString("id-ID")+" XP";
+  $("xpBar").style.width=(st.xp%1000)/10+"%";
+  $("badge").innerHTML="🔥 Daily Quest siap: <b>"+g[0].q+"</b> (+100 XP)";
+  $("nodes").innerHTML=S.map(s=>{const l=st.lv[s.id];
+    return '<button class="node'+(s.id===sel?" sel":"")+'" data-id="'+s.id+'"><span class="ic">'+s.i+'</span>'+s.n+'<span class="gap">'+(l<=1?"⚠️ skill gap":"")+'</span><div class="pips">'+[1,2,3,4,5].map(n=>'<i class="'+(n<=l?"on":"")+'"></i>').join("")+'</div></button>'}).join("");
+  const s=byId(sel),l=st.lv[sel];
+  $("detail").innerHTML='<div><h3>'+s.i+' '+s.n+' · Level '+l+'/5</h3><p>'+s.d+'</p><p><b>Tools:</b> '+s.tools+'</p></div><div class="q">🎯 Quest: <b>'+s.q+'</b><br>⭐ Reward: +100 XP'+(l<5?'<button class="btn sm" id="done">Selesaikan quest</button>':'<br>🏆 Skill ini sudah level maksimal!')+'</div>';
+  const best=[...S].sort((a,b)=>st.lv[b.id]-st.lv[a.id])[0];
+  $("insight").innerHTML='<span class="chip">💪 Terkuat: '+best.n+' (Lv '+st.lv[best.id]+')</span><span class="chip">⚠️ Gap terbesar: '+g[0].n+' (Lv '+st.lv[g[0].id]+')</span>';
+}
+$("nodes").addEventListener("click",e=>{const b=e.target.closest(".node");if(b){sel=b.dataset.id;render()}});
+$("detail").addEventListener("click",e=>{if(e.target.id==="done"){st.lv[sel]++;st.done++;toast("🎉 +100 XP · "+byId(sel).n+" naik ke Lv "+st.lv[sel]);addXP(100)}});
+$("badge").addEventListener("click",()=>{sel=gaps()[0].id;render();$("tree").scrollIntoView()});
+$("badge").addEventListener("keydown",e=>{if(e.key==="Enter")$("badge").click()});
+function summary(){return "🎮 SkillQuest AI · Skill Tree saya\nLevel "+lvlOf()+" ("+st.xp+" XP) · "+st.done+" quest selesai · streak "+st.streak+" hari\n\n"+S.map(s=>s.n+": "+"█".repeat(st.lv[s.id])+"░".repeat(5-st.lv[s.id])+" Lv"+st.lv[s.id]).join("\n")}
+async function copy(t,m){try{await navigator.clipboard.writeText(t);toast(m)}catch(e){toast("Gagal menyalin, salin manual ya")}}
+$("copyBtn").onclick=()=>copy(summary(),"✅ Ringkasan tersalin");
+$("linkBtn").onclick=()=>copy(location.href,"✅ Link tersalin");
+$("reset").onclick=()=>{try{localStorage.removeItem("sq1")}catch(e){}st={xp:1240,lv:{found:3,ing:2,trf:2,orc:1,wh:2,str:1,dq:1,cld:1,rem:2,car:1},done:0,streak:1,last:today()};sel=null;save();render();toast("Progress direset")};
+
+// CHAT
+const log=$("log");let mode="qa";
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function add(cls,html,txt){const d=document.createElement("div");d.className="msg "+cls;if(txt)d.textContent=txt;else d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+function setMode(m){mode=m;$("chatMode").textContent=m==="eng"?"✍️ Mode: Latihan English":"💬 Mode: Tanya jawab"}
+function reply(q){
+  const t=q.toLowerCase(),g=gaps();
+  if(mode==="eng"){
+    const w=t.split(/\s+/).filter(Boolean).length;
+    const c=[[/ingest|pull|collect|extract|fetch/,"sumber data (ingest)"],[/transform|clean|dbt|model/,"transformasi data"],[/load|store|warehouse|bigquery|lake/,"tujuan penyimpanan"],[/schedule|airflow|hourly|daily|every/,"jadwal/orkestrasi"]];
+    const hit=c.filter(x=>x[0].test(t)),miss=c.filter(x=>!x[0].test(t));
+    const ok=hit.length>=3&&w>=12;setMode("qa");
+    let r="📝 <b>Feedback:</b> "+w+" kata · "+hit.length+"/4 elemen pipeline terdeteksi.\n";
+    r+=miss.length?"Tambahkan: "+miss.map(x=>x[1]).join(", ")+".\n":"Semua elemen ada, bagus!\n";
+    r+=w<12?"Kalimat masih pendek, coba satu kalimat utuh yang menyambung ketiga tahap.\n":"";
+    if(ok){st.lv.rem=Math.min(5,st.lv.rem+ (Math.random()<.3?1:0));st.done++;addXP(100);r+="\n🎉 Quest selesai! <b>+100 XP</b>"}else r+="\nCoba lagi dengan versi yang lebih lengkap untuk dapat XP.";
+    return{h:r}}
+  if(/bingung|mulai|belajar apa|gap/.test(t))return{h:"Kita mulai dari <b>Skill Gap Analysis</b> 🧭\n\n📌 Gap #1: <b>"+g[0].n+"</b> (Lv "+st.lv[g[0].id]+")\n📌 Gap #2: <b>"+g[1].n+"</b> (Lv "+st.lv[g[1].id]+")\n📌 Tools: "+g[0].tools+"\n\n🎯 Quest: <b>\""+g[0].q+"\"</b> · ⭐ +100 XP",a:[["Buka di Skill Tree","tree:"+g[0].id]]};
+  if(/english|inggris|explain|pipeline|komunikasi/.test(t)){setMode("eng");return{h:"Siap! Quest <b>Remote Communication</b> 🗣️\n\nContoh: \"Our pipeline ingests data from an API every hour, transforms it with dbt, and loads it into BigQuery for analytics.\"\n\n✍️ Sekarang ketik versi Anda dalam English di kolom bawah, lalu saya beri feedback. ⭐ +100 XP"}}
+  if(/jadwal|schedule|calendar|kalender/.test(t))return{h:"Saya menemukan 2 slot kosong di <b>Google Calendar</b> 📅\n\n• Selasa 19:00–20:30 · "+g[0].q+"\n• Kamis 19:00–20:00 · Review docs (Drive)\n\n🛡️ <b>Human-in-the-Loop:</b> tidak ada event dibuat sebelum Anda approve.",a:[["✅ Approve","ok"],["✏️ Edit","edit"],["❌ Cancel","no"]]};
+  if(/progress|xp|level|status/.test(t))return{h:"📊 <b>Progress Anda</b>\n\nLevel "+lvlOf()+" · "+st.xp+" XP\n🔥 Streak "+st.streak+" hari · "+st.done+" quest selesai\n⚠️ Gap terbesar: "+g[0].n};
+  if(/quest|rekomendasi|next/.test(t))return{h:"🎯 Quest berikutnya: <b>\""+g[0].q+"\"</b> (+100 XP)",a:[["Buka di Skill Tree","tree:"+g[0].id]]};
+  return{h:"Saya belum paham 🤔 Coba: <b>bingung mulai</b>, <b>latihan english</b>, <b>jadwalkan</b>, <b>progress</b>, atau <b>quest</b>."};
+}
+async function ask(q){
+  if(!q.trim())return;
+  add("user","",q);$("ti").value="";
+  await wait(300);const t=add("ai typing","<i></i><i></i><i></i>");await wait(900);t.remove();
+  const r=reply(q),m=add("ai",r.h);
+  if(r.a){const a=document.createElement("div");a.className="acts";r.a.forEach(x=>{const b=document.createElement("button");b.textContent=x[0];b.dataset.act=x[1];a.appendChild(b)});m.appendChild(a)}
+}
+log.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act;
+  if(a.startsWith("tree:")){sel=a.slice(5);render();$("tree").scrollIntoView();return}
+  b.parentNode.querySelectorAll("button").forEach(x=>x.disabled=true);
+  add("ai",a==="ok"?"✅ Disetujui! Event ditambahkan ke jadwal Anda (simulasi). <b>+20 XP</b> untuk disiplin belajar.":a==="edit"?"✏️ Silakan sebutkan hari/jam yang Anda inginkan, saya sesuaikan.":"❌ Dibatalkan. Tidak ada perubahan di kalender Anda.");
+  if(a==="ok")addXP(20)});
+document.querySelectorAll(".scen button").forEach(b=>b.onclick=()=>{setMode("qa");ask(b.dataset.q)});
+$("send").onclick=()=>ask($("ti").value);
+$("ti").addEventListener("keydown",e=>{if(e.key==="Enter")ask($("ti").value)});
+add("ai","Halo! Saya SkillQuest AI 👋 Klik skenario di bawah atau ketik pesan Anda.");
+render();
+</script>
+</body>
+</html>
